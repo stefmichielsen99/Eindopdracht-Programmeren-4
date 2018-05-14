@@ -23,7 +23,7 @@ function getStudentenhuisById(req, res){
     let query = database.connection.query(sql, (error, results) => {
         if(error){
             console.log(error);
-        } else if(results = []){
+        } else if(results.length < 1){
             res.status(404).json(new apiError("HuisId not found", 404));
         } else {
             console.log(results);
