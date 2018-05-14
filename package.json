@@ -1,0 +1,25 @@
+{
+  "name": "eindopdracht",
+  "version": "1.0.0",
+  "description": "eindopdracht programmeren 4",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefmichielsen99/Eindopdracht-Programmeren-4.git"
+  },
+  "keywords": [
+    "eindopdracht"
+  ],
+  "author": "Stef en Jari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefmichielsen99/Eindopdracht-Programmeren-4/issues"
+  },
+  "homepage": "https://github.com/stefmichielsen99/Eindopdracht-Programmeren-4#readme",
+  "dependencies": {
+    "nodemon": "^1.17.4"
+  }
+}
