@@ -20,5 +20,3 @@ function connectToDB(){
 };
 
 module.exports.connectToDB = connectToDB;
-module.exports.mysql = mysql;
-module.exports.connection = connection;
