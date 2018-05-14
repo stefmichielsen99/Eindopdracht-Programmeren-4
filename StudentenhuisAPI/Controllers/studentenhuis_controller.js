@@ -16,11 +16,14 @@ function getAllStudentenhuizen(req, res){
 
 //getStudentenhuisById
 function getStudentenhuisById(req, res){
+    
     let sql = `SELECT * FROM studentenhuis WHERE ID = ${req.params.ID}`;
     console.log(sql);
     let query = database.connection.query(sql, (error, results) => {
         if(error){
             console.log(error);
+        } else if(results = []){
+            res.status(404).json("Huis ID niet gevonden");
         } else {
             console.log(results);
             res.status(200).json(results);
@@ -34,7 +37,10 @@ function deleteStudentenhuisById(req, res){
     let query = database.connection.query(sql, (error, results) => {
         if(error){
             console.log(error);
+        } else if(results.affectedRows === 0){
+            res.status(404).json("Huis ID niet gevonden");
         } else {
+            console.log(results);
             res.status(200).json("Succesfully deleted!");
         }
     });
