@@ -49,14 +49,13 @@ function deleteStudentenhuisById(req, res){
 
 //UpdateStudentenhuisById
 function updateStudentenhuisById(req, res){
-    const ID = req.body.ID;
     const Naam = req.body.Naam;
     const Adres = req.body.Adres;
-    const UserID = req.body.UserID;
+    const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
 
     console.log(req.body);
 
-    let sql = `UPDATE studentenhuis SET 'ID' = ` + ID + `'Naam' = ` + Naam + `'Adres' = ` + Adres + `'UserId' = ` + UserId + `WHERE ID = ${req.params.ID}`; 
+    let sql = `UPDATE studentenhuis SET 'Naam' = ` + Naam + `, 'Adres' = ` + Adres + `WHERE ID = ${req.params.ID}`; 
     console.log(sql);
     let query = database.connection.query(sql, (error, results) => {
         if(error){
@@ -69,20 +68,19 @@ function updateStudentenhuisById(req, res){
 
 //createStudentenhuis
 function createStudentenhuis(req, res){
-    const ID = req.body.ID;
     const Naam = req.body.Naam;
     const Adres = req.body.Adres;
-    const UserID = req.body.UserID;
+    const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
 
     console.log(req.body);
 
-    let sql = "INSERT INTO studentenhuis (`ID`, `Naam`, `Adres`, `UserID`) VALUES ('"+ ID +"','"+ Naam +"', '"+ Adres +"', '"+ UserID +"')";
+    let sql = "INSERT INTO studentenhuis (`Naam`, `Adres`) VALUES ('"+ Naam +"', '"+ Adres +"')";
     console.log(sql);
     let query = database.connection.query(sql, (error, results) => {
         if(error){
             console.log(error);
         } else {
-            res.status(200).json(results);
+            res.status(200).json("Post was made...!");
         }
     });
 }
