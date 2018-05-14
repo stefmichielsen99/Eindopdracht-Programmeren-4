@@ -4,6 +4,7 @@ const database = require("./Database/databaseconnection");
 const app = express();
 const studentenhuis_routes = require("./Routes/studentenhuis_routes");
 const maaltijd_routes = require("./Routes/maaltijd_routes");
+const deelnemer_routes = require("./Routes/deelnemer_routes");
 
 app.use(bodyParser.json());
 
@@ -12,6 +13,7 @@ database.connectToDB();
 //studentenhuis routes
 app.use("/api/studentenhuis", studentenhuis_routes);
 app.use("/api/studentenhuis", maaltijd_routes);
+app.use("/api/studentenhuis", deelnemer_routes);
 
 
 app.listen(3000, () =>{
