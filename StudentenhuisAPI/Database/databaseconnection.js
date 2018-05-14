@@ -20,3 +20,4 @@ function connectToDB(){
 };
 
 module.exports.connectToDB = connectToDB;
+module.exports.connection = connection;

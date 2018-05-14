@@ -9,8 +9,10 @@
   "dependencies": {
     "body-parser": "*",
     "express": "*",
+    "jsonwebtoken": "*",
     "mocha": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "nodemon": "^1.17.4"
   },
   "author": "Jari den Ottelander, Stef Michielsen",
   "license": "ISC"
