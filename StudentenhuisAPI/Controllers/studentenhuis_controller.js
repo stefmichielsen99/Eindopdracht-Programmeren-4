@@ -1,4 +1,5 @@
 const database = require("../Database/databaseconnection");
+const apiError = require("../ApiError");
 
 //getAllStudentenhuizen
 function getAllStudentenhuizen(req, res){
@@ -23,7 +24,7 @@ function getStudentenhuisById(req, res){
         if(error){
             console.log(error);
         } else if(results = []){
-            res.status(404).json("Huis ID niet gevonden");
+            res.status(404).json(new apiError("HuisId not found", 404));
         } else {
             console.log(results);
             res.status(200).json(results);
@@ -38,7 +39,7 @@ function deleteStudentenhuisById(req, res){
         if(error){
             console.log(error);
         } else if(results.affectedRows === 0){
-            res.status(404).json("Huis ID niet gevonden");
+            res.status(404).json(new apiError("HuisId not found", 404));
         } else {
             console.log(results);
             res.status(200).json("Succesfully deleted!");
