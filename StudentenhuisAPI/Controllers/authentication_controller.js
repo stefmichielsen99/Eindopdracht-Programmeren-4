@@ -49,6 +49,8 @@ module.exports = {
         let email= req.body.Email;
         let password = req.body.Password;
 
+
+
         let sql = "SELECT Email,Password FROM user WHERE Email = '" +email+ "'AND Password = '" + password + "'";
         database.connection.query(sql, (error, results) => {
             console.log(results)
@@ -56,8 +58,18 @@ module.exports = {
                  console.log("error ocurred",error);
             }else if(results.length >0){
                 console.log('The solution is: ', results);
-                    let token2 = token.encodeToken(email);
-                    res.status(200).json(token2);
+
+                let sql1 = "SELECT ID FROM user WHERE Email = '" +email+ "'AND Password = '" + password + "'";
+                database.connection.query(sql1, (error, result) =>{
+                    if(error){
+                        console.log(error);
+                    } else {
+                        console.log("test");
+                        console.log (result);
+                        let token2 = token.encodeToken(result, email);
+                        res.status(200).json(token2);
+                    }
+                });
                 } else {
                     res.json(new ApiError('Niet geautoriseerd', 401))
                 }

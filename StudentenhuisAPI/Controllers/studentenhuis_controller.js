@@ -143,7 +143,8 @@ function createStudentenhuis(req, res){
             const Naam = req.body.Naam;
             const Adres = req.body.Adres;
             const UserID = payload.sub.ID;
-            
+
+            console.log(UserID)
             console.log(req.body);
             console.log(typeof Naam);
 
