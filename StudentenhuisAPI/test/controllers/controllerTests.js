@@ -5,4 +5,6 @@
  *heeft aangemaakt, of een gebruiker zich aan wil melden voor een maaltijd maar reeds aangemeld is.
  */
 
- 
+ const assert = require('chai').assert;
+ const controllerstud = require('../../controllers/studentenhuis_controller');
+ const controllermltd = require()
