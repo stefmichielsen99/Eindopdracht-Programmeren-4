@@ -4,3 +4,5 @@
  *zullen optreden – bijvoorbeeld wanneer een gebruiker een maaltijd wil verwijderen die hij niet zelf
  *heeft aangemaakt, of een gebruiker zich aan wil melden voor een maaltijd maar reeds aangemeld is.
  */
+
+ 
