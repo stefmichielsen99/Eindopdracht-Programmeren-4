@@ -25,7 +25,7 @@
      });
      describe('ControllerAuthentication', () => {
         describe('Registration', () => {
-            it('should return a token when providing valid information', (done) => {
+            it('should return a token when providing valid information for valid registration', (done) => {
                 //Manier vinden om te testen / Hoe zie je of ie slaagt?
                 chai.request(server)
                 .post(endpoint)
@@ -49,6 +49,24 @@
                         token: validToken
                     };
                     done();
+                });
+            });
+        });
+        describe('Login', () => {
+            it('should return the users token when provided with valid information ', () => {
+                chai.request(server)
+                .post('/api/login')
+                .send({
+                    'email': 'tst@test.com',
+                    'password': 'secret'
+                })
+                .end((err, res) => {
+                    res.should.have.status(200)
+                    res.body.should.be.a('object')
+                    const response = res.body
+                    response.should.have.property('token').which.is.a('string')
+                    response.should.have.property('email').which.is.a('string')
+                    done()
                 });
             });
         });
