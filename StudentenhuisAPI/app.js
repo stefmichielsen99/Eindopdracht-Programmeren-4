@@ -6,6 +6,7 @@ const studentenhuis_routes = require("./Routes/studentenhuis_routes");
 const maaltijd_routes = require("./Routes/maaltijd_routes");
 const deelnemer_routes = require("./Routes/deelnemer_routes");
 const authentication_routes  = require("./routes/authentication_routes")
+const auth = require("./Controllers/authentication_controller");
 
 app.use(bodyParser.json());
 
@@ -13,6 +14,9 @@ database.connectToDB();
 
 //studentenhuis routes
 app.use("/api", authentication_routes);
+
+app.all("/api", auth.validateToken);
+
 app.use("/api/studentenhuis", studentenhuis_routes);
 app.use("/api/studentenhuis", maaltijd_routes);
 app.use("/api/studentenhuis", deelnemer_routes);

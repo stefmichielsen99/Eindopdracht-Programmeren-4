@@ -5,8 +5,7 @@
 //Variabelen
 const ApiError = require('../ApiError');
 const auth = require('../util/auth/authentication');
-// in voorbeeld werd een personlist gemaakt waarin de personen werden opgeslagen
-//maar hier is dat een db
+
 const database = require('../Database/databaseconnection');
 const token = require('../util/auth/authentication');
 const assert = require('assert')
@@ -17,14 +16,7 @@ const assert = require('assert')
 module.exports = {
 
     validateToken(req, res, next) {
-        // Uncommend om te testen
-        //console.log('validateToken called!')
-        
-        /**
-         * A token can be sent in the body of a request, via a query parameter (in the URL),
-         * or as an HTTP header. We choose the header variant.
-         */
-
+       
         const token = req.header('x-access-token') || '';
         
         auth.decodeToken(token, (err, payload) => {
@@ -42,14 +34,6 @@ module.exports = {
         });
     },
 
-    /**
-     * Log a user in by validating the email and password in the request.
-     * Email is supposed to be more unique than a username, so we use that for identification.
-     * When the email/password combination is valid a token is returned to the client. 
-     * The token provides access to the protected endpoints in subsequent requests, as long 
-     * as it is valid and not expired.
-     */
-
     login (req, res, next) {
         //Verifieer dat de input klopt
         try {
@@ -58,7 +42,7 @@ module.exports = {
         }
         catch (ex) {
             console.log(ex)
-            res.json(new ApiError('Een of meer properties in de request body ontbreken of zijn foutief' , 412))
+            res.json(new ApiError('Wrong or missing element in body!' , 412))
             return
         }
 
@@ -82,13 +66,6 @@ module.exports = {
     },
         
         
-    
-    
-    /**
-     * Register a new user. The user should provide a firstname, lastname, emailaddress and 
-     * password. The emailaddress should be unique when it exists, an error must be thrown.
-     * The password will be encrypted by the Person class and must never be stored as plain text!
-     */
     register(req, res, next) {
     
         let firstname = req.body.Voornaam;
@@ -108,7 +85,7 @@ module.exports = {
         }
         catch (ex) {
             console.log(ex)
-            res.json(new ApiError('Een of meer properties in de request body ontbreken of zijn foutief' , 412))
+            res.json(new ApiError('Wrong or missing element in body!' , 412))
             return
         }
         let sql = "INSERT INTO user (`Voornaam`, `Achternaam`, `Email`, `Password`) VALUES ('"+ firstname +"', '"+ lastname +"', '"+ email +"', '"+ password +"')";
