@@ -57,8 +57,8 @@
                 chai.request(server)
                 .post('/api/login')
                 .send({
-                    'email': 'tst@test.com',
-                    'password': 'secret'
+                    'Email': 'tst@test.com',
+                    'Password': 'secret'
                 })
                 .end((err, res) => {
                     res.should.have.status(200)
