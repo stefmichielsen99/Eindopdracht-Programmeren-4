@@ -2,6 +2,6 @@
 // Application configuration
 //
 module.exports = {
-    "secretkey": "MySuperDuperSecretKey-123454321AbCd",
+    "secretkey": "eindopdrachtje-12345",
     "webPort": "3000"
 }
