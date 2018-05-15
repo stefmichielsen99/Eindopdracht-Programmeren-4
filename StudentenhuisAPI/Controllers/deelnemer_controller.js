@@ -42,6 +42,8 @@ function createDeelnemer(req, res){
     let query = database.connection.query(sql, (error, results) => {
         if(error){
             console.log(error);
+        } else if(results.affectedRows === 0){
+            res.status(404).json(new apiError("StudentenhuisID or MaaltijdID is not found", 404));
         } else {
             res.status(200).json("Deelnemer created!")
         }

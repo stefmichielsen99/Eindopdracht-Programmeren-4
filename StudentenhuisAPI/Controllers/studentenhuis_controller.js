@@ -1,5 +1,9 @@
+
 const database = require("../Database/databaseconnection");
 const apiError = require("../ApiError");
+const studentenhuis = require("../Models/Studentenhuis");
+const AssertionError = require('assert').AssertionError;
+const assert = require("assert");
 
 //getAllStudentenhuizen
 function getAllStudentenhuizen(req, res){
@@ -48,37 +52,64 @@ function deleteStudentenhuisById(req, res){
 }
 
 //UpdateStudentenhuisById
-function updateStudentenhuisById(req, res){
+function updateStudentenhuisById(req, res, next){
     const Naam = req.body.Naam;
     const Adres = req.body.Adres;
-    const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
+    //const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
 
     console.log(req.body);
+    console.log(typeof Naam);
+    
+    try {
+        let huis = new studentenhuis(Naam, Adres);
+    } catch (error){
+        console.log("error");
+        res.status(412).json(new apiError("Wrong or missing element in body!", 412));
+        return;
+    }
+    
+   
 
-    let sql = `UPDATE studentenhuis SET 'Naam' = ` + Naam + `, 'Adres' = ` + Adres + `WHERE ID = ${req.params.ID}`; 
+    let sql = `UPDATE studentenhuis SET Naam = '` + Naam + `', Adres = '` + Adres + `' WHERE ID = ${req.params.ID}`; 
     console.log(sql);
     let query = database.connection.query(sql, (error, results) => {
         if(error){
+            res.json(error);
             console.log(error);
+        } else if (results.affectedRows === 0) {
+            res.status(404).json(new apiError("HuisID was not found", 404));
         } else {
-            res.status(200).json(results);
+            res.status(200).json("Updated!");
         }
     });
+        
 }
+
+ 
+
 
 //createStudentenhuis
 function createStudentenhuis(req, res){
     const Naam = req.body.Naam;
     const Adres = req.body.Adres;
-    const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
-
+    //const UserID = req.body.UserID; //moet uit de JWT token gehaald worden
     console.log(req.body);
+    console.log(typeof Naam);
+
+    try {
+        let huis = new studentenhuis(Naam, Adres);
+    } catch (error){
+        console.log("error");
+        res.status(412).json(new apiError("Wrong or missing element in body!", 412));
+        return;
+    }
+
 
     let sql = "INSERT INTO studentenhuis (`Naam`, `Adres`) VALUES ('"+ Naam +"', '"+ Adres +"')";
     console.log(sql);
-    let query = database.connection.query(sql, (error, results) => {
+    let query = database.connection.query(sql, (error, results) => {        
         if(error){
-            console.log(error);
+           console.log(error);
         } else {
             res.status(200).json("Post was made...!");
         }
