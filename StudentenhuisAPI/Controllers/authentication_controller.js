@@ -62,43 +62,26 @@ module.exports = {
             return
         }
 
-        let email= req.body.email;
-        let password = req.body.password;
-        connection.query('SELECT * FROM users WHERE email = ?',[email], function (error, results, fields) {
-        if (error) {
-            // console.log("error ocurred",error);
-            res.send({
-            "code":400,
-            "failed":"error ocurred"
-            })
-        }else{
-            // console.log('The solution is: ', results);
-            if(results.length >0){
-            if([0].password == password){
-                res.send({
-                "code":200,
-                "success":"login sucessfull"
-                    });
-            }
-            else{
-                res.send({
-                "code":204,
-                "success":"Email and password does not match"
-                    });
-            }
-            }
-            else{
-            res.send({
-                "code":204,
-                "success":"Email does not exits"
-                });
-            }
-        }
-        });
-    },
+        let email= req.body.Email;
+        let password = req.body.Password;
 
+        let sql = "SELECT Email,Password FROM user WHERE Email = '" +email+ "'AND Password = '" + password + "'";
+        database.connection.query(sql, (error, results) => {
+            console.log(results)
+            if (error) {
+                 console.log("error ocurred",error);
+            }else if(results.length >0){
+                console.log('The solution is: ', results);
+                    let token2 = token.encodeToken(email);
+                    res.status(200).json(token2);
+                } else {
+                    res.json(new ApiError('Niet geautoriseerd', 401))
+                }
+            })
+                    
+    },
         
-    
+        
     
     
     /**
