@@ -8,7 +8,7 @@ const AuthController = require('../controllers/authentication_controller');
 
 //Router endpoints die we hebben.
 routes.post('/login', AuthController.login);
-routes.post('/login', AuthController.register);
+routes.post('/register', AuthController.register);
 
 //Exporteren van de routes
 module.exports = routes;

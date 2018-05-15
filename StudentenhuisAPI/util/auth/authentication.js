@@ -2,24 +2,25 @@
 // Authentication using JSON Web Token (JWT)
 // Save this e.g. as ./util/auth/authentication.js
 //
-const settings = require('../../config/config')
+const settings = require('../../confiq/confiq')
 const moment = require('moment')
 const jwt = require('jwt-simple')
 
+
 //
-// Encode (from username to token)
+// Encode (from username en id to token)
 //
-function encodeToken(data) {
+function encodeToken(ID, Email) {
     const playload = {
         exp: moment().add(10, 'days').unix(),
         iat: moment().unix(),
-        sub: data   // can be any value or object you choose! 
+        sub: ID + Email   // can be any value or object you choose! 
     }
     return jwt.encode(playload, settings.secretkey)
 }
 
 //
-// Decode (from token to username)
+// Decode (from token to username en id)
 //
 function decodeToken(token, callback) {
 
@@ -42,4 +43,4 @@ function decodeToken(token, callback) {
 module.exports = {
     encodeToken,
     decodeToken
-}
+};

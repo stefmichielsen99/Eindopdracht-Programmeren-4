@@ -10,7 +10,9 @@
     "body-parser": "*",
     "express": "*",
     "jsonwebtoken": "*",
+    "jwt-simple": "^0.5.1",
     "mocha": "*",
+    "moment": "^2.22.1",
     "mysql": "*",
     "nodemon": "^1.17.4"
   },
