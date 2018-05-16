@@ -30,7 +30,7 @@ describe('Registration', () => {
             response.should.have.property('token').which.is.a('string');
             response.should.have.property('email').which.is.a('string');
 
-            // Export the aquired token for other testcases (if necessary).
+            // Export the aquired token for other testcases.
             validToken = res.body.token;
             module.exports = {
                 token: validToken
