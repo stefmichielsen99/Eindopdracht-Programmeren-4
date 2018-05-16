@@ -70,18 +70,33 @@ function deleteStudentenhuisById(req, res){
             console.log(error);
             res.json(new apiError("No token or wrong token provided", 401));
         } else {
-            let sql = `DELETE FROM studentenhuis WHERE ID = ${req.params.ID}`;
-            console.log(sql);
-            let query = database.connection.query(sql, (error, results) => {
-            if(error){
-                console.log(error);
-            } else if(results.affectedRows === 0){
-            res.status(404).json(new apiError("HuisId not found", 404));
-            } else {
-            console.log(results);
-            res.status(200).json("Succesfully deleted!");
-            }
-        });
+
+            let payloadId = payload.sub;
+            console.log(payloadId);
+
+            let sql1 = `SELECT UserID FROM studentenhuis WHERE ID = ${req.params.ID}`
+            console.log(sql1);
+            let query = database.connection.query(sql1, (error, result) => {
+
+                console.log(result);
+
+                if(error){
+                    console.log(error);
+                } else if (payloadId = result) {
+                    let sql = `DELETE FROM studentenhuis WHERE ID = ${req.params.ID}`;
+                    console.log(sql);
+                    let query = database.connection.query(sql, (error, results) => {
+                    if(error){
+                        res.json(new apiError("Conflict, you can't delete this", 409));
+                    } else if(results.affectedRows === 0){
+                    res.status(404).json(new apiError("HuisId not found", 404));
+                    } else {
+                    console.log(results);
+                    res.status(200).json("Succesfully deleted!");
+                    }
+                });     
+                }
+            });
         }
     });
 }
@@ -112,20 +127,40 @@ function updateStudentenhuisById(req, res, next){
                 return;
             }
             
-        
+            let first = JSON.stringify(payload.sub);
+            let payloadId = first.replace(/\D/g,'');
+            console.log(payloadId);
 
-            let sql = `UPDATE studentenhuis SET Naam = '` + Naam + `', Adres = '` + Adres + `' WHERE ID = ${req.params.ID}`; 
-            console.log(sql);
-            let query = database.connection.query(sql, (error, results) => {
+            let sql1 = `SELECT UserID FROM studentenhuis WHERE ID = ${req.params.ID}`
+            console.log(sql1);
+            let query = database.connection.query(sql1, (error, result) => {
+
+                console.log(result);
+
+                let compare = JSON.stringify(result);
+                let compare2 = compare.replace(/\D/g,'');
+
+                console.log(compare2);
+
                 if(error){
-                    res.json(error);
                     console.log(error);
-                } else if (results.affectedRows === 0) {
-                    res.status(404).json(new apiError("HuisID was not found", 404));
+                } else if (payloadId === compare2){
+                    let sql = `UPDATE studentenhuis SET Naam = '` + Naam + `', Adres = '` + Adres + `' WHERE ID = ${req.params.ID}`; 
+                    console.log(sql);
+                    let query = database.connection.query(sql, (error, results) => {
+                        if(error){
+                            res.json(error);
+                            console.log(error);
+                        } else if (results.affectedRows === 0) {
+                            res.status(404).json(new apiError("HuisID was not found", 404));
+                        } else {
+                            res.status(200).json("Updated!");
+                        }
+                    });
                 } else {
-                    res.status(200).json("Updated!");
+                    res.json(new apiError("Conflict, you can't update this", 409));
                 }
-            });
+            })
         }
     });
         
