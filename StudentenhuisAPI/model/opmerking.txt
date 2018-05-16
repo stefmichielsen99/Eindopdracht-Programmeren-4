@@ -1,0 +1,4 @@
+<-- BESTAND VERWIJDEREN VOOR DEPLOYMENT -->
+
+// in deze map moeten de classes komen van studentenhuis,
+// maaltijd en deelnemer wanneer deze nog worden gemaakt.
