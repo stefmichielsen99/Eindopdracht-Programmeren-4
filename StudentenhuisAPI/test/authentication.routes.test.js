@@ -42,7 +42,7 @@ describe('Registration', () => {
             chai.request(server)
               .get('/blobs')
               .end(function(err, res){
-                res.should.have.status(200);
+                res.should.have.status(404);
                 done();
               });
             });
@@ -56,38 +56,107 @@ describe('Registration', () => {
     })
 
     it('should throw an error when no firstname is provided', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        const token = require(validToken)
+        chai.request(server)
+            .post('/api/register')
+            .set('x-access-token', token)
+            .send({
+                'Achternaam': '  LastName   ',
+                'Email': ' user@host.com ',
+                'Password': ' secret '
+            })
+            .end((err, res) => {
+                res.should.have.status(422)
+                res.body.should.be.a('object')
+
+                const error = res.body
+                error.should.have.property('message')
+                error.should.have.property('code').equals(422)
+                error.should.have.property('datetime')
+
+                done()
+            })
     })
 
     it('should throw an error when firstname is shorter than 2 chars', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
+        const token = require(validToken)
+        chai.request(server)
+            .post('/api/register')
+            .set('x-access-token', token)
+            .send({
+                'Voornaam': '  bo   ',
+                'Achternaam': 'achternaam',
+                'Email': ' user@host.com ',
+                'Password': ' secret '
+            })
+            .end((err, res) => {
+                res.should.have.status(422)
+                //Res.body.should.be(groter dan 2 vgm)
+                res.body.should.be.above(2)
+
+                const error = res.body
+                error.should.have.property('message')
+                error.should.have.property('code').equals(422)
+                error.should.have.property('datetime')
+
+                done()
+            })
         done()
     })
 
     it('should throw an error when no lastname is provided', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        const token = require(validToken)
+        chai.request(server)
+            .post('/api/register')
+            .set('x-access-token', token)
+            .send({
+                'Voornaam': '  voornaam   ',
+                'Email': ' user@host.com ',
+                'Password': ' secret '
+            })
+            .end((err, res) => {
+                res.should.have.status(422)
+                res.body.should.be.a('object')
+
+                const error = res.body
+                error.should.have.property('message')
+                error.should.have.property('code').equals(422)
+                error.should.have.property('datetime')
+
+                done()
+            })
+        
     })
 
     it('should throw an error when lastname is shorter than 2 chars', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        const token = require(validToken)
+        chai.request(server)
+            .post('/api/register')
+            .set('x-access-token', token)
+            .send({
+                'Voornaam': '  voornaam   ',
+                'Achternaam': 'op',
+                'Email': ' user@host.com ',
+                'Password': ' secret '
+            })
+            .end((err, res) => {
+                res.should.have.status(422)
+                //Res.body.should.be(groter dan 2 vgm)
+                res.body.should.be.above(2)
+
+                const error = res.body
+                error.should.have.property('message')
+                error.should.have.property('code').equals(422)
+                error.should.have.property('datetime')
+
+                done()
+            })
+        
+        
     })
 
     it('should throw an error when email is invalid', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+
     })
 
 })

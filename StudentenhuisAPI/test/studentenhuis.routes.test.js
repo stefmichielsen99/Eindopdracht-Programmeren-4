@@ -8,7 +8,7 @@ chai.use(chaiHttp)
 describe('Studentenhuis API POST', () => {
     it('should throw an error when using invalid JWT token', (done) => {
         chai.request(server)
-        .post(endpointToTest)
+        .post('/api/studentenhuis')
         .set('x-access-token', 'in.valid.token')
         .send({
             'firstname': '  FirstName  ',
