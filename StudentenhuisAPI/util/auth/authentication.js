@@ -11,7 +11,7 @@ const jws = require("jws");
 //
 // Encode (from username en id to token)
 //
-function encodeToken(ID, Email) {
+function encodeToken(UserID, Email) {
     const playload = {
         exp: moment().add(10, 'days').unix(),
         iat: moment().unix(),

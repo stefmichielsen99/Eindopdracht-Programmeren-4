@@ -100,22 +100,62 @@ module.exports = {
             res.json(new ApiError('Wrong or missing element in body!' , 412))
             return
         }
-        let sql = "INSERT INTO user (`Voornaam`, `Achternaam`, `Email`, `Password`) VALUES ('"+ firstname +"', '"+ lastname +"', '"+ email +"', '"+ password +"')";
+
+
+        let sql1 = "SELECT Email FROM user";
+        console.log(sql1);
+
+        let query = database.connection.query(sql1, (error, result) => {
+
+            let compare = JSON.stringify(result);
+            let compare2 = compare.replace(/[^\w]/,'');
+            console.log(compare2);
+
         
-            console.log(sql);
-            database.connection.query(sql, (error, results) => {
-                
+            console.log(email);
+
+
+            if(error){
+                console.log(error);
+                res.status(401).json(new ApiError("Niet geautoriseerd", 401));
+                return;
+            } else if (!compare2.includes(email)){
+
+                let sql = "INSERT INTO user (`Voornaam`, `Achternaam`, `Email`, `Password`) VALUES ('"+ firstname +"', '"+ lastname +"', '"+ email +"', '"+ password +"')";
+        
+                console.log(sql);
+                database.connection.query(sql, (error, results) => {
+                    
+                    if(error){
+                        console.log(error);
+                        res.status(401).json(new ApiError("Niet geautoriseerd", 401));
+                        return;
+                    } else {
+                        console.log("Goed!");
+                    }  
+                });
+            } else {
+                console.log(compare2);
+                console.log(result);
+                console.log("failed");
+                res.status(401).json(new ApiError("Niet geautoriseerd", 401));
+                return;
+            }
+            let sql3 = "SELECT ID from user WHERE Email = '" + email + "'";
+            console.log(sql3);
+            let query = database.connection.query(sql3, (error, result2) => {
                 if(error){
                     console.log(error);
-                    res.status(401).json(new ApiError("Niet geautoriseerd", 401));
                 } else {
-                    let token2 = token.encodeToken(email);
+                    result3 = JSON.stringify(result2);
+                    console.log(result3);
+                    result4 = result3.replace(/\D/g,'');
+                    console.log(result4);
+                    let token2 = token.encodeToken(result3, email);
                     res.status(200).json(token2);
-                                                
                 }
-                        
-                
-            })
+            });
+        });
 
         }
     }
