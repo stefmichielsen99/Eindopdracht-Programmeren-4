@@ -1,6 +1,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const server = require('../server')
+const server = require('../app')
 
 chai.should()
 chai.use(chaiHttp)
@@ -12,8 +12,6 @@ describe('Studentenhuis API POST', () => {
         .set('x-access-token', 'in.valid.token')
         .send({
             'firstname': '  FirstName  ',
-            'lastname': '  LastName   ',
-            'email': ' user@host.com ',
             'password': ' secret '
         })
         .end((err, res) => {
