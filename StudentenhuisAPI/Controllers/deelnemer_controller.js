@@ -67,7 +67,11 @@ function createDeelnemer(req, res){
             const maaltijdID = req.params.maaltijdID;
             const UserId = payload.sub.ID;
 
-            let sql = "INSERT INTO deelnemers (`StudentenhuisID`, `MaaltijdID`, `UserID`) VALUES ('"+ studentenhuisID + "', '"+ maaltijdID +"', '"+ UserId +"')";
+            let UserID = JSON.stringify(payload.sub);
+            let userId = UserID.replace(/\D/g,'');
+            const test = auth.decodePayload(token);
+
+            let sql = "INSERT INTO deelnemers (`StudentenhuisID`, `MaaltijdID`, `UserID`) VALUES ('"+ studentenhuisID + "', '"+ maaltijdID +"', '"+ userId +"')";
             console.log(sql);
             let query = database.connection.query(sql, (error, results) => {
                 if(error){
@@ -75,7 +79,7 @@ function createDeelnemer(req, res){
                 } else if(results.affectedRows === 0){
                     res.status(404).json(new apiError("StudentenhuisID or MaaltijdID is not found", 404));
                 } else {
-                    res.status(200).json("Deelnemer created!")
+                    res.status(200).json("You've been added to a meal!")
                 }
             });
         }

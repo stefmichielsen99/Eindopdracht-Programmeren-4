@@ -5,6 +5,10 @@ const studentenhuis = require("../Models/Studentenhuis");
 const AssertionError = require('assert').AssertionError;
 const assert = require("assert");
 const auth = require("../util/auth/authentication");
+
+
+
+
 //getAllStudentenhuizen
 function getAllStudentenhuizen(req, res){
 
@@ -142,9 +146,12 @@ function createStudentenhuis(req, res){
         } else {
             const Naam = req.body.Naam;
             const Adres = req.body.Adres;
-            const UserID = payload.sub.ID;
+            let UserID = JSON.stringify(payload.sub);
+            let userId = UserID.replace(/\D/g,'');
+            const test = auth.decodePayload(token);
 
-            console.log(UserID)
+            console.log(test);
+            console.log(userId);
             console.log(req.body);
             console.log(typeof Naam);
 
@@ -157,7 +164,7 @@ function createStudentenhuis(req, res){
             }
 
 
-            let sql = "INSERT INTO studentenhuis (`Naam`, `Adres`, `UserID`) VALUES ('"+ Naam +"', '"+ Adres +"', '" + UserID +"')";
+            let sql = "INSERT INTO studentenhuis (`Naam`, `Adres`, `UserID`) VALUES ('"+ Naam +"', '"+ Adres +"', '" + userId +"')";
             console.log(sql);
             let query = database.connection.query(sql, (error, results) => {        
                 if(error){
@@ -176,3 +183,4 @@ module.exports.getStudentenhuisById = getStudentenhuisById;
 module.exports.updateStudentenhuisById = updateStudentenhuisById;
 module.exports.deleteStudentenhuisById = deleteStudentenhuisById;
 module.exports.createStudentenhuis = createStudentenhuis;
+

@@ -96,7 +96,9 @@ function createMaaltijdById(req, res){
             const Allergie = req.body.Allergie;
             const Prijs = req.body.Prijs;
             const studentenhuisID = req.params.studentenhuisID;
-            const UserID = payload.sub.ID;
+            let UserID = JSON.stringify(payload.sub);
+            let userId = UserID.replace(/\D/g,'');
+            const test = auth.decodePayload(token);
 
             console.log(req.body);
 
@@ -109,7 +111,7 @@ function createMaaltijdById(req, res){
             }
 
 
-            let sql = "INSERT INTO maaltijd (`Naam`, `Beschrijving`, `Ingredienten`, `Allergie`, `Prijs`, `UserID`, `StudentenhuisID`) VALUES ('"+ Naam +"', '"+ Beschrijving +"', '"+ Ingredienten +"', '"+ Allergie +"', '"+ Prijs +"', '"+ UserID +"', '"+ studentenhuisID +"')";
+            let sql = "INSERT INTO maaltijd (`Naam`, `Beschrijving`, `Ingredienten`, `Allergie`, `Prijs`, `UserID`, `StudentenhuisID`) VALUES ('"+ Naam +"', '"+ Beschrijving +"', '"+ Ingredienten +"', '"+ Allergie +"', '"+ Prijs +"', '"+ userId +"', '"+ studentenhuisID +"')";
             console.log(sql);
             let query = database.connection.query(sql, (error, results) => {
                 if(error){
