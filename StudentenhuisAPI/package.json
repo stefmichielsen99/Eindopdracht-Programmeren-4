@@ -4,7 +4,7 @@
   "description": "Studentenhuis API",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --exit",
+    "test": "mocha --reporter spec --exit",
     "start": "nodemon app.js"
   },
   "dependencies": {
@@ -20,5 +20,13 @@
     "nodemon": "^1.17.4"
   },
   "author": "Jari den Ottelander, Stef Michielsen",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "\u0016 \u0016https://github.com/stefmichielsen99/Eindopdracht-Programmeren-4"
+  }
 }
