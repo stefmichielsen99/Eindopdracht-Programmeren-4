@@ -17,10 +17,10 @@ describe('Registration', () => {
         chai.request(server)
         .post('/api/register')
         .send({
-            'Voornaam': ' FirstName ',
-            'Achternaam': ' LastName ',
-            'Email': 'tst@test.com',
-            'Password': 'secret'
+            firstname: ' FirstName ',
+            lastname: ' LastName ',
+            email: 'tst@test.com',
+            password: 'secret'
         })
         .end((err, res) => {
             res.should.have.status(200);
@@ -40,7 +40,7 @@ describe('Registration', () => {
 
     it('should return an error on GET request', (done) => {
             chai.request(server)
-              .get('/blobs')
+              .get('/api/registratie')
               .end(function(err, res){
                 res.should.have.status(404);
                 done();
@@ -49,114 +49,119 @@ describe('Registration', () => {
           
 
     it('should throw an error when the user already exists', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        chai.request(server).post('/api/register').send({
+            firstname: 'Jan',
+            lastname: "Smit",
+            email: "jsmit@server.nl",
+            password: "secret"
+        }).end((err, res) => {
+            res.should.have.status(412);
+
+            res.body.should.be.a('object');
+            res.body.should.have.property('message');
+            res.body.should.have.property('code');
+            res.body.should.have.property('datetime');
+        
+            done();
+        });
     })
 
     it('should throw an error when no firstname is provided', (done) => {
-        const token = require(validToken)
-        chai.request(server)
-            .post('/api/register')
-            .set('x-access-token', token)
-            .send({
-                'Achternaam': '  LastName   ',
-                'Email': ' user@host.com ',
-                'Password': ' secret '
-            })
-            .end((err, res) => {
-                res.should.have.status(422)
-                res.body.should.be.a('object')
+        chai.request(server).post('/api/register').send({
+            lastname: "Karel",
+            email: "test@test.nl",
+            password: "secret"
+        }).end((err, res) => {
+            res.should.have.status(412);
 
-                const error = res.body
-                error.should.have.property('message')
-                error.should.have.property('code').equals(422)
-                error.should.have.property('datetime')
-
-                done()
-            })
+            res.body.should.be.a('object');
+            res.body.should.have.property('message');
+            res.body.should.have.property('code');
+            res.body.should.have.property('datetime');
+       
+            done();
+        });
     })
 
     it('should throw an error when firstname is shorter than 2 chars', (done) => {
-        const token = require(validToken)
         chai.request(server)
-            .post('/api/register')
-            .set('x-access-token', token)
-            .send({
-                'Voornaam': '  bo   ',
-                'Achternaam': 'achternaam',
-                'Email': ' user@host.com ',
-                'Password': ' secret '
-            })
-            .end((err, res) => {
-                res.should.have.status(422)
-                //Res.body.should.be(groter dan 2 vgm)
-                res.body.should.be.above(2)
-
-                const error = res.body
-                error.should.have.property('message')
-                error.should.have.property('code').equals(422)
-                error.should.have.property('datetime')
-
-                done()
-            })
-        done()
+        .post('/api/register')
+        .send({
+                firstname: 'a',
+                lastname: "Karel",
+                email: "test@test.nl",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
+            });
     })
 
     it('should throw an error when no lastname is provided', (done) => {
-        const token = require(validToken)
         chai.request(server)
-            .post('/api/register')
-            .set('x-access-token', token)
-            .send({
-                'Voornaam': '  voornaam   ',
-                'Email': ' user@host.com ',
-                'Password': ' secret '
-            })
-            .end((err, res) => {
-                res.should.have.status(422)
-                res.body.should.be.a('object')
-
-                const error = res.body
-                error.should.have.property('message')
-                error.should.have.property('code').equals(422)
-                error.should.have.property('datetime')
-
-                done()
+        .post('/api/register')
+        .send({
+                firstname: 'a',
+                email: "test@test.nl",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
             })
         
     })
 
     it('should throw an error when lastname is shorter than 2 chars', (done) => {
-        const token = require(validToken)
         chai.request(server)
-            .post('/api/register')
-            .set('x-access-token', token)
-            .send({
-                'Voornaam': '  voornaam   ',
-                'Achternaam': 'op',
-                'Email': ' user@host.com ',
-                'Password': ' secret '
-            })
-            .end((err, res) => {
-                res.should.have.status(422)
-                //Res.body.should.be(groter dan 2 vgm)
-                res.body.should.be.above(2)
-
-                const error = res.body
-                error.should.have.property('message')
-                error.should.have.property('code').equals(422)
-                error.should.have.property('datetime')
-
-                done()
+        .post('/api/register')
+        .send({
+                firstname: 'asdfa',
+                lastname: "a",
+                email: "test@test.nl",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
             })
         
         
     })
 
     it('should throw an error when email is invalid', (done) => {
-
+        chai.request(server)
+        .post('/api/register')
+        .send({
+                firstname: 'asdfa',
+                lastname: "lkjkjldsf",
+                email: "jajaja",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
     })
 
 })
@@ -167,8 +172,8 @@ describe('Login', () => {
         chai.request(server)
         .post('/api/login')
         .send({
-            'Email': 'tst@test.com',
-            'Password': 'secret'
+            email: 'tst@test.com',
+            password: 'secret'
         })
         .end((err, res) => {
             res.should.have.status(200)
@@ -181,27 +186,60 @@ describe('Login', () => {
     }); 
 
     it('should throw an error when email does not exist', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        chai.request(server)
+        .post('/api/register')
+        .send({
+                email: "a",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
     })
+})
 
     it('should throw an error when email exists but password is invalid', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        chai.request(server)
+        .post('/api/register')
+        .send({
+                email: "test@test.nl",
+                password: "a"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
     })
-
+})
     it('should throw an error when using an invalid email', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        chai.request(server)
+        .post('/api/register')
+        .send({
+                email: "a",
+                password: "secret"
+            }).end((err, res) => {
+                res.should.have.status(412);
+    
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('code');
+                res.body.should.have.property('datetime');
+           
+                done();
     })
-
+})
+    
     })
+})
 
     
 })

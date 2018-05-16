@@ -7,22 +7,9 @@ chai.use(chaiHttp)
 
 describe('Studentenhuis API POST', () => {
     it('should throw an error when using invalid JWT token', (done) => {
-        chai.request(server)
-        .post('/api/studentenhuis')
-        .set('x-access-token', 'in.valid.token')
-        .send({
-            'firstname': '  FirstName  ',
-            'password': ' secret '
-        })
-        .end((err, res) => {
-            res.should.have.status(401)
-            res.body.should.be.a('object')
-            const error = res.body
-            error.should.have.property('message')
-            error.should.have.property('code').equals(401)
-            error.should.have.property('datetime')
-            done()
-        })
+        //
+        // Hier schrijf je jouw testcase.
+        //
     })
 
     it('should return a studentenhuis when posting a valid object', (done) => {

@@ -80,15 +80,7 @@ module.exports = {
             })
                     
     },
-        
-        
-    
-    
-    /**
-     * Register a new user. The user should provide a firstname, lastname, emailaddress and 
-     * password. The emailaddress should be unique when it exists, an error must be thrown.
-     * The password will be encrypted by the Person class and must never be stored as plain text!
-     */
+
     register(req, res, next) {
     
         let firstname = req.body.Voornaam;
