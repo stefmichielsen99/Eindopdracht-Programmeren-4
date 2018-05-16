@@ -15,7 +15,7 @@ let validToken
 describe('Registration', () => {
     it('should return a token when providing valid information', (done) => {
         chai.request(server)
-        .post(endpoint)
+        .post('/api/register')
         .send({
             'Voornaam': ' FirstName ',
             'Achternaam': ' LastName ',
@@ -39,11 +39,14 @@ describe('Registration', () => {
         });
 
     it('should return an error on GET request', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
-    })
+            chai.request(server)
+              .get('/blobs')
+              .end(function(err, res){
+                res.should.have.status(200);
+                done();
+              });
+            });
+          
 
     it('should throw an error when the user already exists', (done) => {
         //
@@ -129,5 +132,7 @@ describe('Login', () => {
         done()
     })
 
-})
+    })
+
+    
 })
