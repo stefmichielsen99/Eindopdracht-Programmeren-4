@@ -13,8 +13,7 @@ describe('Studentenhuis API POST', () => {
         .post('/api/studentenhuis   ')
         .send({
             Naam: 'Omega',
-            Adres: 'teststraat 1',
-            UserID = 'token'
+            Adres: 'teststraat 1'
         }).end((err, res) => {
             res.should.have.status(401);
 
@@ -32,8 +31,7 @@ describe('Studentenhuis API POST', () => {
         .post('/api/studentenhuis   ')
         .send({
             Naam: 'Omega',
-            Adres: 'Teststraat 1',
-            UserID = 'token'
+            Adres: 'Teststraat 1'
         }).end((err, res) => {
             res.should.have.status(200);
 
@@ -50,8 +48,7 @@ describe('Studentenhuis API POST', () => {
         chai.request(server)
         .post('/api/studentenhuis   ')
         .send({
-            Adres: 'Teststraat 1',
-            UserID = 'token'
+            Adres: 'Teststraat 1'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -68,8 +65,7 @@ describe('Studentenhuis API POST', () => {
         chai.request(server)
         .post('/api/studentenhuis   ')
         .send({
-            Naam: 'Omega',
-            UserID = 'token'
+            Naam: 'Omega'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -89,8 +85,7 @@ describe('Studentenhuis API GET all', () => {
         .get('/api/studentenhuis')
         .send({
             Naam: 'Omega',
-            Adres: 'Teststraat 1',
-            UserID = 'token'
+            Adres: 'Teststraat 1'
         }).end((err, res) => {
             res.should.have.status(401);
 
@@ -108,8 +103,7 @@ describe('Studentenhuis API GET all', () => {
         .get('/api/studentenhuis')
         .send({
             Naam: 'Omega',
-            Adres: 'Teststraat',
-            UserID = 'token'
+            Adres: 'Teststraat'
         }).end((err, res) => {
             res.should.have.status(200);
 
@@ -128,8 +122,7 @@ describe('Studentenhuis API GET one', () => {
         chai.request(server)
         .get('/api/studentenhuis')
         .send({
-            ID: '1',
-            UserID = 'token'
+            ID: '1'
         }).end((err, res) => {
             res.should.have.status(401);
 
@@ -146,8 +139,7 @@ describe('Studentenhuis API GET one', () => {
         chai.request(server)
         .get('/api/studentenhuis')
         .send({
-            ID: '1',
-            UserID = 'token'
+            ID: '1'
         }).end((err, res) => {
             res.should.have.status(200);
 
@@ -164,8 +156,7 @@ describe('Studentenhuis API GET one', () => {
         chai.request(server)
         .get('/api/studentenhuis   ')
         .send({
-            ID: '1',
-            UserID = 'token'
+            ID: '1'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -186,8 +177,7 @@ describe('Studentenhuis API PUT', () => {
         .send({
             ID: '1',
             Naam: 'Alpha',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(401);
 
@@ -206,8 +196,7 @@ describe('Studentenhuis API PUT', () => {
         .send({
             ID: '1',
             Naam: 'Alpha',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(200);
 
@@ -225,8 +214,7 @@ describe('Studentenhuis API PUT', () => {
         .put('/api/studentenhuis')
         .send({
             ID: '1',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -244,8 +232,7 @@ describe('Studentenhuis API PUT', () => {
         .post('/api/studentenhuis   ')
         .send({
             ID: '1',
-            Naam: 'Alpha',
-            UserID = 'token'
+            Naam: 'Alpha'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -266,8 +253,7 @@ describe('Studentenhuis API DELETE', () => {
         .send({
             ID: '1',
             Naam: 'Alpha',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(401);
 
@@ -286,8 +272,7 @@ describe('Studentenhuis API DELETE', () => {
         .send({
             ID: '1',
             Naam: 'Alpha',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(200);
 
@@ -305,8 +290,7 @@ describe('Studentenhuis API DELETE', () => {
         .del('/api/studentenhuis   ')
         .send({
             ID: '1',
-            Adres: 'Testadres 2',
-            UserID = 'token'
+            Adres: 'Testadres 2'
         }).end((err, res) => {
             res.should.have.status(412);
 
@@ -325,8 +309,7 @@ describe('Studentenhuis API DELETE', () => {
         .del('/api/studentenhuis   ')
         .send({
             ID: '1',
-            Naam: 'Alpha',
-            UserID = 'token'
+            Naam: 'Alpha'
         }).end((err, res) => {
             res.should.have.status(412);
 
